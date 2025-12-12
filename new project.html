@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex | The Anatomy of Adrenaline</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Teko:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Teko', 'sans-serif'],
+                        display: ['Russo One', 'sans-serif'],
+                    },
+                    colors: {
+                        'kawasaki-green': '#69BE28',
+                        'harley-orange': '#FF6900',
+                        'asphalt': '#1a1a1a',
+                        'metal': '#2d2d2d',
+                        'chrome': '#e5e5e5',
+                    },
+                    backgroundImage: {
+                        'carbon-texture': "linear-gradient(45deg, #1a1a1a 25%, transparent 25%, transparent 75%, #1a1a1a 75%, #1a1a1a), linear-gradient(45deg, #1a1a1a 25%, transparent 25%, transparent 75%, #1a1a1a 75%, #1a1a1a)",
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0f0f0f;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f0f0f;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #444;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #69BE28;
+        }
+
+        /* Speed Line Animation */
+        .speed-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .line {
+            position: absolute;
+            width: 100px;
+            height: 2px;
+            background: rgba(255,255,255,0.1);
+            animation: speed 2s infinite linear;
+        }
+        @keyframes speed {
+            0% { transform: translateX(-100%) translateY(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(200vw) translateY(100px); opacity: 0; }
+        }
+
+        .card-zoom {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .card-zoom:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 40px -10px rgba(105, 190, 40, 0.2);
+        }
+
+        /* Glassmorphism customized for industrial look */
+        .glass-panel {
+            background: rgba(30, 30, 30, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        }
+        
+        .text-outline {
+            -webkit-text-stroke: 1px rgba(255,255,255,0.3);
+            color: transparent;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-panel border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <i class="fas fa-motorcycle text-kawasaki-green text-2xl transform -scale-x-100"></i>
+                    <span class="font-display text-2xl tracking-widest text-white italic">APEX<span class="text-harley-orange">.</span></span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home" class="hover:text-kawasaki-green px-3 py-2 rounded-md text-xl font-medium transition-colors tracking-wide">Home</a>
+                        <a href="#anatomy" class="hover:text-kawasaki-green px-3 py-2 rounded-md text-xl font-medium transition-colors tracking-wide">Anatomy</a>
+                        <a href="#brands" class="hover:text-kawasaki-green px-3 py-2 rounded-md text-xl font-medium transition-colors tracking-wide">Legends</a>
+                        <a href="#configurator" class="bg-gradient-to-r from-kawasaki-green to-green-700 text-white hover:from-white hover:to-white hover:text-black px-6 py-1 rounded-sm text-xl font-bold transition-all skew-x-[-10deg]">
+                            <span class="skew-x-[10deg] inline-block">BUILD RIDE</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden">
+        <!-- Background Image overlay -->
+        <div class="absolute inset-0 z-0">
+            <!-- Dynamic Motorbike Image -->
+            <img src="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=2070&auto=format&fit=crop" alt="Superbike on Asphalt" class="w-full h-full object-cover opacity-60">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0f0f0f] via-[#0f0f0f]/50 to-transparent"></div>
+            <!-- Speed Lines Effect -->
+            <div class="speed-lines">
+                <div class="line" style="top: 20%; left: -10%; animation-duration: 1.5s;"></div>
+                <div class="line" style="top: 40%; left: -20%; animation-duration: 2.2s;"></div>
+                <div class="line" style="top: 70%; left: -5%; animation-duration: 1.8s;"></div>
+            </div>
+        </div>
+
+        <div class="relative z-10 text-center px-4 max-w-6xl mx-auto mt-16">
+            <h2 class="text-kawasaki-green font-display text-lg tracking-[0.3em] mb-4 uppercase animate-pulse">Two Wheels. One Soul.</h2>
+            <h1 class="font-display text-6xl md:text-9xl text-white mb-2 leading-none uppercase italic">
+                TAME THE <br/>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-harley-orange to-red-600">BEAST</span>
+            </h1>
+            <p class="mt-4 text-2xl text-gray-300 max-w-2xl mx-auto font-sans tracking-wide">
+                From the Milwaukee muscle of Harley to the Akashi precision of Kawasaki. Engineering that defies gravity.
+            </p>
+            <div class="mt-12 flex flex-col md:flex-row justify-center gap-6">
+                <a href="#anatomy" class="group relative px-10 py-4 bg-white text-black font-display text-xl uppercase skew-x-[-10deg] hover:bg-harley-orange transition-colors duration-300">
+                    <span class="skew-x-[10deg] inline-block relative z-10">Inspect The Tech</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Anatomy Section -->
+    <section id="anatomy" class="py-24 bg-[#111] relative border-t border-white/5">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-20">
+                <h2 class="font-display text-4xl md:text-6xl text-white mb-4 uppercase italic">Machine <span class="text-harley-orange">Anatomy</span></h2>
+                <div class="h-1 w-32 bg-gradient-to-r from-kawasaki-green to-harley-orange mx-auto"></div>
+                <p class="mt-4 text-gray-400 font-sans text-xl">Deconstructing high-performance engineering.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- The Engine Card -->
+                <div class="glass-panel p-6 card-zoom group cursor-pointer relative overflow-hidden border-t-2 border-harley-orange">
+                    <div class="absolute top-0 right-0 p-4 opacity-30 group-hover:opacity-100 transition-opacity">
+                        <i class="fas fa-cogs text-6xl text-white"></i>
+                    </div>
+                    <div class="h-56 mb-6 overflow-hidden relative skew-x-[-3deg] border-2 border-white/10">
+                        <img src="https://images.unsplash.com/photo-1599256872237-5dcc0fbe9668?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" alt="V-Twin Engine">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                        <div class="absolute bottom-2 left-4 text-harley-orange font-display text-xl">POWERPLANT</div>
+                    </div>
+                    <h3 class="font-display text-2xl mb-2 text-white group-hover:text-harley-orange transition-colors">V-Twin vs Inline-4</h3>
+                    <p class="text-gray-400 text-lg leading-relaxed mb-4 font-sans">
+                        The heartbeat of the machine. Whether it's the thundering torque of a Milwaukee-Eight or the screaming RPMs of a Supercharged H2, the engine defines the ride.
+                    </p>
+                    <ul class="text-sm text-white font-sans uppercase tracking-widest space-y-2">
+                        <li><i class="fas fa-bolt text-harley-orange mr-2"></i>Desmodromic Valves</li>
+                        <li><i class="fas fa-bolt text-harley-orange mr-2"></i>Liquid Cooling</li>
+                        <li><i class="fas fa-bolt text-harley-orange mr-2"></i>Titanium Exhaust</li>
+                    </ul>
+                </div>
+
+                <!-- The Chassis Card -->
+                <div class="glass-panel p-6 card-zoom group cursor-pointer relative overflow-hidden border-t-2 border-kawasaki-green">
+                    <div class="absolute top-0 right-0 p-4 opacity-30 group-hover:opacity-100 transition-opacity">
+                        <i class="fas fa-project-diagram text-6xl text-white"></i>
+                    </div>
+                    <div class="h-56 mb-6 overflow-hidden relative skew-x-[-3deg] border-2 border-white/10">
+                        <img src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" alt="Motorcycle Suspension">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                        <div class="absolute bottom-2 left-4 text-kawasaki-green font-display text-xl">CHASSIS</div>
+                    </div>
+                    <h3 class="font-display text-2xl mb-2 text-white group-hover:text-kawasaki-green transition-colors">Frame & Suspension</h3>
+                    <p class="text-gray-400 text-lg leading-relaxed mb-4 font-sans">
+                        Control is everything. Trellis frames provide rigidity while inverted Öhlins forks dampen the chaos of the asphalt, allowing for razor-sharp cornering.
+                    </p>
+                    <ul class="text-sm text-white font-sans uppercase tracking-widest space-y-2">
+                        <li><i class="fas fa-check text-kawasaki-green mr-2"></i>Trellis Frame</li>
+                        <li><i class="fas fa-check text-kawasaki-green mr-2"></i>Inverted Forks</li>
+                        <li><i class="fas fa-check text-kawasaki-green mr-2"></i>Single-Sided Swingarm</li>
+                    </ul>
+                </div>
+
+                <!-- The Design Card -->
+                <div class="glass-panel p-6 card-zoom group cursor-pointer relative overflow-hidden border-t-2 border-white">
+                    <div class="absolute top-0 right-0 p-4 opacity-30 group-hover:opacity-100 transition-opacity">
+                        <i class="fas fa-wind text-6xl text-white"></i>
+                    </div>
+                    <div class="h-56 mb-6 overflow-hidden relative skew-x-[-3deg] border-2 border-white/10">
+                        <img src="images.jpeg" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" alt="Motorcycle Fairing">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                        <div class="absolute bottom-2 left-4 text-white font-display text-xl">AERODYNAMICS</div>
+                    </div>
+                    <h3 class="font-display text-2xl mb-2 text-white transition-colors">Aero & Styling</h3>
+                    <p class="text-gray-400 text-lg leading-relaxed mb-4 font-sans">
+                        Cutting through the air with surgical precision. From the aggressive fairings of a Ninja to the classic chrome lines of a Softail, aesthetics meet function.
+                    </p>
+                    <ul class="text-sm text-white font-sans uppercase tracking-widest space-y-2">
+                        <li><i class="fas fa-angle-right text-gray-500 mr-2"></i>Winglets</li>
+                        <li><i class="fas fa-angle-right text-gray-500 mr-2"></i>Ram Air Intake</li>
+                        <li><i class="fas fa-angle-right text-gray-500 mr-2"></i>Drag Reduction</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brands Section -->
+    <section id="brands" class="py-24 bg-[#0a0a0a]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="font-display text-4xl md:text-5xl mb-12 text-center text-white uppercase italic">Two Roads. <span class="text-transparent bg-clip-text bg-gradient-to-r from-kawasaki-green to-harley-orange">One Passion.</span></h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Harley Davidson -->
+                <div class="group relative h-[500px] overflow-hidden border border-white/10">
+                    <div class="absolute inset-0 bg-black/60 group-hover:bg-black/30 transition-all duration-500 z-10"></div>
+                    <img src="david-baylis-harley-2020-0016.jpg" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-1000 grayscale group-hover:grayscale-0" alt="Harley Davidson">
+                    
+                    <div class="absolute bottom-0 left-0 right-0 p-10 z-20 bg-gradient-to-t from-black via-black/90 to-transparent">
+                        <h3 class="text-4xl font-display font-bold mb-2 text-harley-orange italic">HARLEY-DAVIDSON</h3>
+                        <p class="text-lg text-gray-300 mb-8 max-w-md font-sans">American muscle. The rumble of freedom. Iconic cruisers that define the open road.</p>
+                        <a href="https://www.harley-davidson.com" target="_blank" class="inline-flex items-center space-x-3 text-white border-b-2 border-harley-orange pb-2 hover:text-harley-orange transition-all font-display uppercase tracking-widest">
+                            <span>Enter The Garage</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Kawasaki -->
+                <div class="group relative h-[500px] overflow-hidden border border-white/10">
+                    <div class="absolute inset-0 bg-black/60 group-hover:bg-black/30 transition-all duration-500 z-10"></div>
+                    <img src="photo-1611241443333-bdcff35bc8cc.jpeg" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-1000 grayscale group-hover:grayscale-0" alt="Kawasaki Ninja">
+                    
+                    <div class="absolute bottom-0 left-0 right-0 p-10 z-20 bg-gradient-to-t from-black via-black/90 to-transparent">
+                        <h3 class="text-4xl font-display font-bold mb-2 text-kawasaki-green italic">KAWASAKI</h3>
+                        <p class="text-lg text-gray-300 mb-8 max-w-md font-sans">Japanese precision. Pure adrenaline. The creators of the legendary Ninja series.</p>
+                        <a href="https://www.kawasaki.com" target="_blank" class="inline-flex items-center space-x-3 text-white border-b-2 border-kawasaki-green pb-2 hover:text-kawasaki-green transition-all font-display uppercase tracking-widest">
+                            <span>Track Spec</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Configurator Section -->
+    <section id="configurator" class="py-24 relative overflow-hidden bg-[#111]">
+        <!-- Diagonal stripe background -->
+        <div class="absolute inset-0" style="background-image: repeating-linear-gradient(45deg, #161616 25%, transparent 25%, transparent 50%, #161616 50%, #161616 75%, transparent 75%, transparent); background-size: 20px 20px;"></div>
+        
+        <div class="max-w-4xl mx-auto px-4 relative z-10">
+            <div class="glass-panel p-8 md:p-12 border-t-4 border-white shadow-[0_0_100px_-20px_rgba(0,0,0,0.8)]">
+                <div class="text-center mb-10">
+                    <h2 class="font-display text-4xl md:text-5xl text-white italic">CONFIGURE YOUR <span class="text-transparent bg-clip-text bg-gradient-to-r from-kawasaki-green to-harley-orange">RIDE</span></h2>
+                    <p class="text-gray-400 mt-2 font-sans text-xl uppercase tracking-widest">Select your weapon of choice.</p>
+                </div>
+
+                <form id="bikeForm" class="space-y-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Model Selection -->
+                        <div class="space-y-2">
+                            <label class="text-sm font-display text-white uppercase tracking-widest">Select Model</label>
+                            <div class="relative">
+                                <select id="modelInput" class="w-full bg-black/60 border border-white/20 text-white rounded-none px-4 py-4 focus:border-kawasaki-green focus:ring-1 focus:ring-kawasaki-green outline-none appearance-none cursor-pointer font-sans text-xl">
+                                    <option value="Kawasaki Ninja H2">Kawasaki Ninja H2 (Hypersport)</option>
+                                    <option value="Harley Sportster S">Harley Sportster S (Sport Cruiser)</option>
+                                    <option value="Kawasaki ZX-10R">Kawasaki ZX-10R (Track)</option>
+                                    <option value="Harley Fat Bob">Harley Fat Bob (Cruiser)</option>
+                                </select>
+                                <div class="absolute right-4 top-5 text-xs text-gray-500 pointer-events-none">▼</div>
+                            </div>
+                        </div>
+
+                        <!-- Exhaust Sound -->
+                        <div class="space-y-2">
+                            <label class="text-sm font-display text-white uppercase tracking-widest">Exhaust Note</label>
+                            <div class="flex items-center space-x-4 bg-black/60 border border-white/20 p-3">
+                                <input type="range" id="soundInput" min="1" max="3" step="1" class="w-full accent-kawasaki-green cursor-pointer">
+                                <span id="soundLabel" class="text-lg text-white font-sans min-w-[100px] text-center uppercase text-harley-orange">Stock</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Personal Details -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="space-y-2">
+                            <label class="text-sm font-display text-white uppercase tracking-widest">Rider Name</label>
+                            <input type="text" id="nameInput" required placeholder="Maverick" class="w-full bg-black/60 border border-white/20 text-white rounded-none px-4 py-4 focus:border-kawasaki-green focus:ring-1 focus:ring-kawasaki-green outline-none placeholder-gray-600 font-sans text-xl">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-display text-white uppercase tracking-widest">Livery / Color</label>
+                            <select id="colorInput" class="w-full bg-black/60 border border-white/20 text-white rounded-none px-4 py-4 focus:border-kawasaki-green focus:ring-1 focus:ring-kawasaki-green outline-none appearance-none cursor-pointer font-sans text-xl">
+                                <option value="Matte Black">Matte Black</option>
+                                <option value="Kawasaki Green">Lime Green</option>
+                                <option value="Vivid Orange">Vivid Orange</option>
+                                <option value="Gunmetal Grey">Gunmetal Grey</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Upgrades -->
+                    <div class="space-y-4">
+                        <label class="text-sm font-display text-white uppercase tracking-widest">Performance Upgrades</label>
+                        <div class="flex flex-wrap gap-4">
+                            <label class="inline-flex items-center cursor-pointer group">
+                                <input type="checkbox" class="hidden peer">
+                                <span class="px-6 py-2 bg-white/5 text-lg font-sans text-gray-400 border border-white/10 transition-all peer-checked:bg-white peer-checked:text-black skew-x-[-10deg] group-hover:border-white/50">
+                                    <span class="skew-x-[10deg] inline-block">Akrapovič Exhaust</span>
+                                </span>
+                            </label>
+                            <label class="inline-flex items-center cursor-pointer group">
+                                <input type="checkbox" class="hidden peer">
+                                <span class="px-6 py-2 bg-white/5 text-lg font-sans text-gray-400 border border-white/10 transition-all peer-checked:bg-kawasaki-green peer-checked:text-black skew-x-[-10deg] group-hover:border-kawasaki-green/50">
+                                    <span class="skew-x-[10deg] inline-block">Quickshifter</span>
+                                </span>
+                            </label>
+                            <label class="inline-flex items-center cursor-pointer group">
+                                <input type="checkbox" class="hidden peer">
+                                <span class="px-6 py-2 bg-white/5 text-lg font-sans text-gray-400 border border-white/10 transition-all peer-checked:bg-harley-orange peer-checked:text-black skew-x-[-10deg] group-hover:border-harley-orange/50">
+                                    <span class="skew-x-[10deg] inline-block">Stage 2 Tune</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full bg-white text-black font-bold font-display uppercase tracking-widest py-4 hover:bg-black hover:text-white hover:border hover:border-white transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.2)] mt-6 text-2xl skew-x-[-5deg]">
+                        <span class="skew-x-[5deg] inline-block">INITIATE BUILD</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-white/10 py-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <span class="font-display text-3xl text-white italic">APEX<span class="text-kawasaki-green">.</span></span>
+            <p class="text-gray-500 text-sm mt-4 font-sans tracking-wider">© 2024 Apex Moto. Ride Fast. Ride Safe.</p>
+            <div class="mt-6 flex justify-center space-x-6 text-gray-400">
+                <a href="#" class="hover:text-kawasaki-green transition-colors"><i class="fab fa-instagram text-2xl"></i></a>
+                <a href="#" class="hover:text-harley-orange transition-colors"><i class="fab fa-youtube text-2xl"></i></a>
+                <a href="#" class="hover:text-white transition-colors"><i class="fas fa-motorcycle text-2xl"></i></a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
